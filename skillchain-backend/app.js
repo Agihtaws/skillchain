@@ -10,17 +10,16 @@ const { adminWallet, issuerRegistryContract } = require('./config/blockchain');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// --- CORS Configuration --- // <<< UPDATED CORS BLOCK
+// --- CORS Configuration ---
 const frontendUrl = process.env.FRONTEND_URL;
 if (!frontendUrl) {
   console.error('FRONTEND_URL environment variable is not set. CORS might not work correctly.');
-  // Fallback to allow all for local development, but warn
-  app.use(cors());
+  app.use(cors()); // Fallback to allow all for local development, but warn
 } else {
   const corsOptions = {
     origin: frontendUrl,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allow cookies, if any are used (though not in this DApp)
+    credentials: true,
     optionsSuccessStatus: 204
   };
   app.use(cors(corsOptions));
