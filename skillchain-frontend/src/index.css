@@ -1,0 +1,3329 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Basic Reset & Global Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Main Colors */
+  --primary-blue: #007bff; /* A vibrant, accessible blue */
+  --primary-blue-hover: #0056b3; /* Darker blue for hover states */
+  --light-blue-accent: #e0f2ff; /* Very light blue for subtle accents */
+
+  /* Backgrounds */
+  --background-page: #f8f9fa; /* Overall page background - very light gray */
+  --background-card: #ffffff; /* White for cards and main content blocks */
+  --background-secondary-section: #e9ecef; /* Slightly darker light gray for secondary sections */
+
+  /* Text Colors */
+  --text-dark: #212529; /* Dark gray for primary text on light backgrounds */
+  --text-medium: #495057; /* Medium gray for secondary text */
+  --text-light: #ffffff; /* White for text on colored buttons/dark backgrounds */
+  --text-muted: #6c757d; /* Muted gray for less prominent text */
+
+  /* Borders & Shadows */
+  --border-light: #ced4da; /* Light gray border */
+  --box-shadow-light: rgba(0, 0, 0, 0.1);
+  --box-shadow-medium: rgba(0, 0, 0, 0.15);
+
+  /* Status Colors (kept distinct for clarity) */
+  --success-color: #28a745; /* Green */
+  --error-color: #dc3545; /* Red */
+  --info-color: #17a2b8; /* Cyan-ish Blue */
+
+
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: light; /* Changed to light color scheme */
+  color: var(--text-dark); /* Main text color */
+  background-color: var(--background-page); /* Overall page background */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-page);
+  color: var(--text-dark);
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling globally */
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+}
+
+/* General Headings */
+h2 {
+  color: var(--text-dark);
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* Default, can be overridden */
+  font-weight: 600;
+  font-size: 2.25rem;
+}
+
+h3 {
+  color: var(--text-dark);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+
+h4 {
+  color: var(--text-dark); /* Dark text for headings */
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+/* General Buttons */
+button {
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  padding: 0.75em 1.5em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--primary-blue);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 0.5rem;
+  box-shadow: 0 2px 4px var(--box-shadow-light);
+}
+button:hover {
+  background-color: var(--primary-blue-hover);
+  border-color: var(--primary-blue-hover);
+  transform: translateY(-1px);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+  outline-offset: 2px;
+}
+button:disabled {
+  background-color: var(--background-secondary-section);
+  border-color: var(--border-light);
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                Header.jsx Styles                           */
+/* -------------------------------------------------------------------------- */
+
+.header-bar {
+  width: 100%; /* Full width */
+  background-color: var(--background-card); /* White header background */
+  padding: 1rem 2rem; /* Internal padding for header content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--box-shadow-light);
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1rem; /* Space between elements */
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0; /* Allows flex containers to shrink */
+}
+
+.header-left h2 {
+  margin: 0;
+  color: var(--primary-blue); /* Primary blue for header title */
+  font-size: 1.75rem;
+  cursor: pointer; /* Indicate it's clickable */
+}
+
+.admin-badge {
+  background-color: var(--success-color);
+  color: var(--text-light);
+  padding: 0.3em 0.8em;
+  border-radius: 9999px;
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wallet-info {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-secondary-section); /* Light gray for wallet info */
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px; /* Pill shape */
+  font-size: 0.9em;
+  color: var(--text-dark); /* Dark text for wallet info */
+  gap: 0.75rem;
+  border: 1px solid var(--border-light);
+  flex-wrap: nowrap; /* Keep wallet info contents on one line if possible */
+  min-width: 0; /* Allows the wallet info flex container to shrink */
+  overflow: hidden; /* Hide overflow within the pill if needed */
+}
+
+.wallet-address {
+  font-weight: 500;
+  white-space: nowrap; /* Keep text on a single line */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* Add "..." for truncated text */
+  display: inline-block; /* Required for text-overflow to work with nowrap */
+  flex-shrink: 1; /* Allow this item to shrink */
+  min-width: 0; /* Important for flex items to prevent overflow */
+}
+
+/* Balance text within wallet info */
+.wallet-info span:not(.admin-badge):not(._rk_button *) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: var(--text-muted); /* Muted text for copy icon */
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+  margin-left: -5px; /* Adjust spacing */
+  transition: color 0.2s ease-in-out;
+  flex-shrink: 0; /* Prevent from shrinking */
+}
+.copy-button:hover {
+  color: var(--text-dark); /* Darker on hover */
+}
+
+/* RainbowKit Connect Button custom styles */
+.wallet-info ._rk_button { /* Target RainbowKit button within wallet-info */
+  background-color: var(--background-secondary-section) !important;
+  color: var(--text-dark) !important;
+  border-color: var(--border-light) !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.9em !important;
+  margin: 0 !important;
+  flex-shrink: 0; /* Prevent the button from shrinking too much, prioritize its visibility */
+  white-space: nowrap; /* Keep button text on a single line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: fit-content; /* Allow the button to take its natural content width */
+}
+
+.wallet-info ._rk_button:hover {
+  background-color: var(--background-page) !important; /* Lighter on hover */
+  border-color: var(--border-light) !important;
+}
+
+/* Settings button in header */
+.settings-button {
+  background: none;
+  border: none;
+  color: var(--text-dark); /* Dark text for settings icon */
+  font-size: 1.5em;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  padding: 0;
+  flex-shrink: 0; /* Prevent from shrinking */
+}
+.settings-button:hover {
+  color: var(--primary-blue-hover);
+}
+
+/* Header Responsive Adjustments */
+@media (max-width: 1280px) {
+  .header-bar {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-bar {
+    padding: 1rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .header-left, .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .header-right {
+    align-items: center; /* Center buttons within the column */
+  }
+  .wallet-info {
+    flex-direction: row; /* Keep as row by default on medium screens */
+    flex-wrap: wrap; /* Allow wrapping within wallet-info if needed */
+    justify-content: center; /* Center items within the wrapped wallet info */
+    width: 100%; /* Ensure it takes full width when wrapped */
+    padding: 0.75rem;
+  }
+  .wallet-address,
+  .wallet-info span:not(.admin-badge):not(._rk_button *) {
+    max-width: 100%; /* Allow full width when items are stacked or wrapped */
+    text-align: center; /* Center the truncated text */
+  }
+  .wallet-info ._rk_button {
+    width: auto; /* Allow button to size naturally */
+    flex-basis: auto; /* Reset flex basis */
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.75rem;
+  }
+  .header-left h2 {
+    font-size: 1.5rem; /* Adjust header title size for very small screens */
+  }
+  .wallet-info {
+    flex-direction: column; /* Stack wallet info items vertically on very small screens */
+    align-items: center; /* Center items when stacked */
+    flex-wrap: nowrap; /* Prevent wrapping again once stacked vertically */
+  }
+  .wallet-info ._rk_button {
+    width: 100%; /* Make button take full width */
+  }
+  .wallet-address,
+  .wallet-info span:not(.admin-badge):not(._rk_button *) {
+    max-width: 100%; /* Allow full width */
+    text-align: center; /* Center text */
+  }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                           StudentDashboard.jsx Styles                      */
+/* -------------------------------------------------------------------------- */
+
+/* General Container for content sections */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+/* Message Styles */
+.message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.message.info {
+  background-color: var(--info-color);
+}
+
+/* Wrapper for H2 and Refresh button */
+.dashboard-header-controls {
+  display: flex;
+  justify-content: space-between; /* Pushes H2 to left, button to right */
+  align-items: center;
+  margin-bottom: 2rem; /* Space below this header section */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1rem; /* Space between H2 and button if they wrap */
+}
+
+.dashboard-header-controls h2 {
+  margin-bottom: 0; /* Remove bottom margin from H2 inside this flex container */
+  flex-grow: 1; /* Allow H2 to take up available space */
+  text-align: left; /* Align H2 text to the left */
+}
+
+/* Adjust button margin when it's directly inside dashboard-header-controls */
+.dashboard-header-controls button {
+  margin: 0; /* Remove default button margins */
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Button Group (for 'Manage Privacy Settings' button, if present) */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1.5rem; /* Adjust as needed */
+    margin-bottom: 2rem; /* Add specific margin for this group */
+    gap: 1rem;
+}
+
+.button-group button {
+    margin: 0; /* Reset individual button margins if parent has gap */
+}
+
+
+/* Grid for Issuer Cards */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: var(--background-secondary-section);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px var(--box-shadow-light);
+  text-align: left;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-light);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--box-shadow-medium);
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  background-color: var(--light-blue-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 1.1em;
+  border: 1px dashed var(--border-light);
+}
+
+.card h3 {
+  font-size: 1.3em;
+  margin-bottom: 0.75rem;
+  color: var(--primary-blue);
+}
+
+.card p {
+  font-size: 0.9em;
+  color: var(--text-medium);
+  margin-bottom: 0.4rem;
+  word-wrap: break-word;
+}
+
+/* StudentDashboard Responsive Adjustments */
+@media (max-width: 1440px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .container {
+    max-width: 1000px;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    max-width: 90%;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header-controls {
+    flex-direction: column; /* Stack H2 and button vertically */
+    align-items: center; /* Center items when stacked */
+    text-align: center; /* Center text within the column */
+  }
+
+  .dashboard-header-controls h2 {
+    text-align: center; /* Center H2 text when stacked */
+    margin-bottom: 1rem; /* Add some space below H2 when stacked */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 1.5rem;
+  }
+  button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  .message {
+    padding: 0.8rem 1rem;
+  }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                       StudentCredentialDetails.jsx Styles                  */
+/* -------------------------------------------------------------------------- */
+
+.credential-info {
+    background-color: var(--background-secondary-section); /* Light gray for info section */
+    padding: 1.5rem; /* Reduced padding slightly from .details-section */
+    border-radius: 0.75rem;
+    margin-top: 2rem; /* Space above this section */
+    margin-bottom: 2rem; /* Space below this section */
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.credential-info p {
+    margin-bottom: 0.75rem; /* Consistent spacing for paragraphs */
+    color: var(--text-medium);
+    font-size: 1em;
+}
+
+.credential-info p strong {
+    color: var(--text-dark); /* Darker for strong text */
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+.credential-display {
+    text-align: center;
+    margin-top: 2rem; /* Space above this section */
+    margin-bottom: 2rem; /* Space below this section */
+    background-color: var(--background-card); /* White background for display area */
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.credential-display h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-blue); /* Primary blue for title */
+}
+
+.credential-display img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px; /* Limit height for large images */
+    object-fit: contain; /* Ensure image fits without cropping */
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin-top: 1rem; /* Space between title and image */
+    background-color: var(--background-page); /* Light background for image container */
+}
+
+.verification-output {
+    margin-top: 2rem; /* Space above this section */
+    margin-bottom: 2rem; /* Space below this section */
+    background-color: var(--background-card);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.verification-output h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-blue);
+}
+
+.qr-code-container {
+    margin-top: 2rem; /* Space above QR code */
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--background-secondary-section); /* Light gray background for QR code */
+    border-radius: 0.5rem;
+    border: 1px dashed var(--border-light);
+    display: inline-block; /* To center the container itself */
+}
+
+/* Reusing .details-section for generated proof and verification history */
+.details-section {
+    background-color: var(--background-secondary-section); /* Light gray background */
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem; /* Add consistent top margin */
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.details-section h3, .details-section h4 {
+    color: var(--primary-blue); /* Primary blue for titles */
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.75rem;
+    font-size: 1.5rem; /* Adjusted for h3, h4 will be smaller */
+}
+
+.details-section h4 {
+    font-size: 1.25rem; /* Specific size for h4 within details-section */
+    color: var(--text-dark); /* Dark text for h4 */
+    border-bottom: 1px dashed var(--border-light); /* Dashed border for sub-sections */
+}
+
+.details-section p {
+    margin-bottom: 0.75rem;
+    color: var(--text-medium);
+    font-size: 1em;
+}
+
+.details-section p strong {
+    color: var(--text-dark); /* Darker for strong text */
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+/* Adjustments for buttons within verification-output */
+.verification-output .button-group {
+    margin-top: 1.5rem;
+    margin-bottom: 0; /* Remove bottom margin to avoid double spacing */
+}
+
+/* Responsive adjustments for credential details */
+@media (max-width: 768px) {
+  .credential-info,
+  .credential-display,
+  .verification-output,
+  .details-section {
+    padding: 1rem; /* Reduce padding on smaller screens */
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .credential-display h3,
+  .verification-output h3,
+  .details-section h3 {
+    font-size: 1.25rem; /* Smaller headings on mobile */
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .details-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .qr-code-container {
+    padding: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .credential-info p,
+  .details-section p {
+    font-size: 0.9em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                           PublicVerifier.jsx Styles                        */
+/* -------------------------------------------------------------------------- */
+
+.public-verifier-container {
+  width: 100%;
+  max-width: 900px; /* Slightly narrower container for verifier page */
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.public-verifier-container h2 {
+  margin-bottom: 1rem;
+}
+
+.public-verifier-container p {
+  color: var(--text-medium);
+  margin-bottom: 1.5rem;
+}
+
+.public-verifier-container form {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: left; /* Align form elements to the left */
+}
+
+.public-verifier-container .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.public-verifier-container .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.public-verifier-container input[type="text"] {
+  background-color: var(--background-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-dark);
+  padding: 0.8em 1em;
+  border-radius: 0.375rem;
+  margin: 0; /* Override default button margin */
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.public-verifier-container input[type="text"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.public-verifier-container button[type="submit"] {
+  margin-top: 1rem;
+  width: auto; /* Allow button to size to content */
+}
+
+/* Reusing .details-section for verification result and full details */
+.public-verifier-container .details-section {
+    background-color: var(--background-secondary-section);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin-top: 2rem; /* Consistent top margin */
+    margin-bottom: 2rem; /* Consistent bottom margin */
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.public-verifier-container .details-section h3 {
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.public-verifier-container .details-section p {
+    margin-bottom: 0.75rem;
+    color: var(--text-medium);
+    font-size: 1em;
+}
+
+.public-verifier-container .details-section p strong {
+    color: var(--text-dark);
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+/* Credential Content Preview within Full Details */
+.public-verifier-container .credential-display {
+    text-align: center;
+    margin-top: 1.5rem; /* Space above this preview section */
+    background-color: var(--background-card); /* White background for display area */
+    padding: 1rem; /* Slightly less padding than main credential-display */
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.public-verifier-container .credential-display h4 {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-size: 1.1em;
+}
+
+.public-verifier-container .credential-display img {
+    max-width: 100%; /* Ensure it fits its container */
+    height: auto;
+    max-height: 200px; /* Limit height for previews */
+    object-fit: contain;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    background-color: var(--background-page);
+}
+
+/* Reusing .button-group for navigation button */
+.public-verifier-container .button-group {
+    margin-top: 2rem; /* Consistent spacing */
+    justify-content: center;
+}
+
+/* Responsive Adjustments for PublicVerifier.jsx */
+@media (max-width: 768px) {
+  .public-verifier-container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+
+  .public-verifier-container .details-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-verifier-container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  .public-verifier-container h2 {
+    font-size: 1.75rem;
+  }
+  .public-verifier-container p {
+    font-size: 0.9em;
+  }
+  .public-verifier-container button[type="submit"] {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .public-verifier-container .details-section h3 {
+    font-size: 1.25rem;
+  }
+  .public-verifier-container .credential-display h4 {
+    font-size: 1em;
+  }
+  .public-verifier-container .details-section p {
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                           PrivacySettings.jsx Styles                       */
+/* -------------------------------------------------------------------------- */
+
+.privacy-settings-group {
+  background-color: var(--background-secondary-section); /* Light gray background */
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+  box-shadow: 0 4px 8px var(--box-shadow-light);
+  border: 1px solid var(--border-light);
+}
+
+.privacy-settings-group p {
+  color: var(--text-medium);
+  margin-bottom: 1.5rem;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.privacy-settings-group label {
+  display: flex; /* Use flexbox for alignment of checkbox and text */
+  align-items: center; /* Vertically align items */
+  margin-bottom: 1rem; /* Space between each setting */
+  color: var(--text-dark);
+  font-size: 1em;
+  cursor: pointer; /* Indicate the label is interactive */
+}
+
+.privacy-settings-group input[type="checkbox"] {
+  margin-right: 0.75rem; /* Space between checkbox and text */
+  min-width: 1.2em; /* Ensure checkbox is visible */
+  min-height: 1.2em; /* Ensure checkbox is visible */
+  accent-color: var(--primary-blue); /* Style checkbox with primary blue */
+  cursor: pointer;
+}
+
+.privacy-settings-group input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Adjustments for the save button below the settings group */
+.privacy-settings-group + button[type="submit"] {
+  margin-top: 2rem; /* Add space between the group and the save button */
+}
+
+/* Responsive adjustments for PrivacySettings.jsx */
+@media (max-width: 768px) {
+  .privacy-settings-group {
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .privacy-settings-group p {
+    margin-bottom: 1rem;
+  }
+  .privacy-settings-group label {
+    font-size: 0.95em;
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .privacy-settings-group {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .privacy-settings-group p {
+    font-size: 0.9em;
+    margin-bottom: 0.75rem;
+  }
+  .privacy-settings-group label {
+    font-size: 0.9em;
+    margin-bottom: 0.7rem;
+  }
+  .privacy-settings-group input[type="checkbox"] {
+    min-width: 1em;
+    min-height: 1em;
+    margin-right: 0.5rem;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Sidebar.jsx Styles                         */
+/* -------------------------------------------------------------------------- */
+
+.issuer-page-layout {
+  display: flex;
+  /* Calculate height: 100vh for full viewport height, minus the header's height (e.g., 4rem) */
+  /* Remove margin-top to eliminate the gap with the header */
+  min-height: calc(100vh - 4rem); 
+  width: 100%;
+  max-width: 1400px; /* Match the container max-width for overall layout */
+  margin: 0 auto 2rem auto; /* Remove top margin, keep horizontal centering, 2rem bottom margin */
+  background-color: var(--background-card); /* White background for the main content area */
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  overflow: hidden; /* Ensures rounded corners are respected */
+}
+
+.sidebar {
+  width: 250px; /* Fixed width for the sidebar */
+  background-color: var(--background-secondary-section); /* Light gray for sidebar background */
+  padding: 1.5rem 0; /* Vertical padding, no horizontal padding as links have it */
+  border-right: 1px solid var(--border-light); /* Separator from main content */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Space between navigation links */
+}
+
+.sidebar-link {
+  padding: 0.75rem 1.5rem; /* Padding for click area */
+  color: var(--text-dark); /* Dark text for links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  border-left: 4px solid transparent; /* For active indicator */
+  display: block; /* Ensure padding works correctly */
+  text-align: left; /* Align text to the left */
+}
+
+.sidebar-link:hover {
+  background-color: var(--light-blue-accent); /* Light blue on hover */
+  color: var(--primary-blue-hover);
+}
+
+.sidebar-link.active {
+  background-color: var(--light-blue-accent); /* Highlight active link */
+  color: var(--primary-blue);
+  border-left-color: var(--primary-blue); /* Blue bar for active indicator */
+  font-weight: 600;
+}
+
+.issuer-content-area {
+  flex-grow: 1; /* Allows the content area to take up remaining space */
+  padding: 2rem; /* Internal padding for the main content */
+  display: flex;
+  flex-direction: column;
+  /* To remove any potential top padding/margin from the first element inside if it's a .container */
+  /* If the first child is a .container, its top margin will collapse with this,
+     but we want the padding of issuer-content-area to define the space.
+     We can explicitly set margin-top: 0 for the first child if needed, or rely on padding. */
+}
+
+/* Responsive Adjustments for Sidebar */
+@media (max-width: 1024px) {
+  .issuer-page-layout {
+    flex-direction: column; /* Stack sidebar and content vertically */
+    margin: 0 auto 1.5rem auto; /* Remove top margin, adjust bottom margin */
+    max-width: 90%;
+  }
+
+  .sidebar {
+    width: 100%; /* Full width for sidebar */
+    flex-direction: row; /* Layout links horizontally */
+    flex-wrap: wrap; /* Allow links to wrap */
+    justify-content: center; /* Center links horizontally */
+    padding: 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light); /* Bottom border when stacked */
+  }
+
+  .sidebar-nav {
+    flex-direction: row; /* Horizontal navigation */
+    gap: 0.75rem; /* Adjust gap for horizontal links */
+  }
+
+  .sidebar-link {
+    padding: 0.5rem 1rem;
+    border-left: none; /* Remove left border */
+    border-bottom: 3px solid transparent; /* Use bottom border for active indicator */
+  }
+
+  .sidebar-link.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--primary-blue); /* Blue bar for active indicator at bottom */
+  }
+
+  .issuer-content-area {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .issuer-page-layout {
+    margin: 0 auto 1rem auto; /* Remove top margin, adjust bottom margin */
+    max-width: 95%;
+  }
+
+  .sidebar {
+    padding: 0.75rem;
+  }
+
+  .sidebar-nav {
+    gap: 0.5rem;
+  }
+
+  .sidebar-link {
+    font-size: 0.9em;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .issuer-content-area {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-nav {
+    flex-direction: column; /* Stack links vertically again on very small screens */
+    align-items: stretch; /* Stretch links to full width */
+  }
+
+  .sidebar-link {
+    text-align: center; /* Center text when stacked */
+    border-bottom: none; /* Remove bottom border */
+    border-left: 3px solid transparent; /* Re-introduce left border for active */
+  }
+
+  .sidebar-link.active {
+    border-bottom-color: transparent;
+    border-left-color: var(--primary-blue);
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                            IssuerDashboard.jsx Styles                      */
+/* -------------------------------------------------------------------------- */
+
+/* The main content container for the Issuer Dashboard, replacing .container for this specific view */
+.dashboard-content-container {
+  /* This container is now inside .issuer-page-layout and .issuer-content-area */
+  /* It no longer needs a max-width, margin: auto, or box-shadow as the parent layout handles that */
+  width: 100%;
+  /* Padding is handled by .issuer-content-area, but we can add internal spacing if needed */
+  /* background-color: var(--background-card); *//* Handled by parent .issuer-page-layout */
+  /* border-radius: 0.75rem; *//* Handled by parent .issuer-page-layout */
+  /* box-shadow: 0 6px 12px var(--box-shadow-medium); *//* Handled by parent .issuer-page-layout */
+  text-align: center; /* Default alignment for content */
+}
+
+/* Wrapper for the main heading and refresh button */
+.dashboard-header-controls {
+  display: flex;
+  justify-content: space-between; /* Pushes H2 to left, button to right */
+  align-items: center;
+  margin-bottom: 2rem; /* Space below this header section */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1rem; /* Space between H2 and button if they wrap */
+}
+
+.dashboard-header-controls h2 {
+  margin-bottom: 0; /* Remove bottom margin from H2 inside this flex container */
+  flex-grow: 1; /* Allow H2 to take up available space */
+  text-align: left; /* Align H2 text to the left */
+}
+
+/* Adjust button margin when it's directly inside dashboard-header-controls */
+.dashboard-header-controls button {
+  margin: 0; /* Remove default button margins */
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Filter and Search Group */
+.filter-and-search-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  align-items: flex-end; /* Align labels/inputs at the bottom */
+}
+
+.filter-and-search-group .form-group {
+  margin-bottom: 0; /* Adjust margin for group layout */
+  flex: 1; /* Allow form groups to take equal space */
+  min-width: 180px; /* Minimum width for filter/search inputs before wrapping */
+}
+
+.filter-and-search-group .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+  text-align: left; /* Ensure label text is left-aligned */
+}
+
+.filter-and-search-group .select-filter,
+.filter-and-search-group .input-search {
+  background-color: var(--background-card); /* White background for inputs */
+  border: 1px solid var(--border-light);
+  color: var(--text-dark); /* Dark text color */
+  padding: 0.8em 1em;
+  border-radius: 0.375rem; /* 6px */
+  margin: 0; /* Remove default margins */
+  width: 100%; /* Take full width of its flex container */
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.filter-and-search-group .select-filter:focus,
+.filter-and-search-group .input-search:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Primary blue glow */
+  outline: none;
+}
+
+.filter-and-search-group .input-search::placeholder {
+  color: var(--text-muted);
+}
+
+/* Heading for the list of issued credentials */
+.dashboard-content-container h3 {
+  text-align: left; /* Align to the left */
+  margin-top: 1.5rem; /* Space above this heading */
+  margin-bottom: 1.5rem;
+}
+
+/* Message for no credentials found */
+.dashboard-content-container .message.info {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Grid for Issuer Cards (reusing styles from StudentDashboard) */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: var(--background-secondary-section);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px var(--box-shadow-light);
+  text-align: left;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-light);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--box-shadow-medium);
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  background-color: var(--light-blue-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 1.1em;
+  border: 1px dashed var(--border-light);
+}
+
+.card h3 {
+  font-size: 1.3em;
+  margin-bottom: 0.75rem;
+  color: var(--primary-blue);
+}
+
+.card p {
+  font-size: 0.9em;
+  color: var(--text-medium);
+  margin-bottom: 0.4rem;
+  word-wrap: break-word;
+}
+
+
+/* Responsive Adjustments for IssuerDashboard.jsx */
+@media (max-width: 1024px) {
+  /* When sidebar stacks vertically, adjust dashboard header controls */
+  .dashboard-header-controls {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dashboard-header-controls h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  /* Adjust filter and search group for smaller screens */
+  .filter-and-search-group {
+    flex-direction: column; /* Stack filters vertically */
+    align-items: stretch; /* Stretch items to full width */
+  }
+
+  .filter-and-search-group .form-group {
+    min-width: unset; /* Remove min-width when stacked */
+    width: 100%; /* Take full width */
+  }
+
+  .dashboard-content-container h3 {
+    text-align: center; /* Center the "My Issued Credentials" list heading */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-content-container {
+    padding: 0; /* Let .issuer-content-area handle padding */
+  }
+
+  .dashboard-header-controls {
+    padding: 0 1rem; /* Add horizontal padding if needed, but .issuer-content-area already has it */
+  }
+
+  .filter-and-search-group {
+    padding: 0 1rem; /* Add horizontal padding if needed */
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column for cards */
+  }
+  .card {
+    padding: 1rem;
+    margin: 0 1rem; /* Add horizontal margin to cards */
+  }
+  .dashboard-content-container h3 {
+    padding: 0 1rem;
+  }
+  .dashboard-content-container .message.info {
+    margin: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header-controls h2 {
+    font-size: 1.75rem;
+  }
+  .dashboard-header-controls button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .dashboard-content-container h3 {
+    font-size: 1.5rem;
+  }
+  .filter-and-search-group .form-group label {
+    font-size: 0.9em;
+  }
+  .filter-and-search-group .select-filter,
+  .filter-and-search-group .input-search {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                        MintNFTCredentialForm.jsx Styles                    */
+/* -------------------------------------------------------------------------- */
+
+/* The .container here is nested within .issuer-content-area.
+   We adjust its properties to fit well within that layout. */
+.mint-nft-credential-form-page.container { /* Use the specific class added to the component's root div */
+  width: 100%; /* Take full width of parent content area */
+  max-width: 700px; /* A reasonable max-width for forms for readability */
+  margin: 0 auto; /* Center within the available space of issuer-content-area */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.mint-nft-credential-form-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.mint-nft-credential-form-page.container form {
+  margin-bottom: 2rem; /* Space below the form before messages/buttons */
+  text-align: left; /* Align form content to the left */
+}
+
+.mint-nft-credential-form-page .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left; /* Ensure label and input align left within their group */
+}
+
+.mint-nft-credential-form-page .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+/* Reusing global input styles for text inputs and file inputs */
+.mint-nft-credential-form-page input[type="text"],
+.mint-nft-credential-form-page input[type="file"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.mint-nft-credential-form-page input[type="file"] {
+  padding: 0.6em 0.8em; /* Slightly different padding for file input */
+  background-color: var(--background-secondary-section); /* Slightly different background for file input */
+}
+
+.mint-nft-credential-form-page input[type="text"]:focus,
+.mint-nft-credential-form-page input[type="file"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.mint-nft-credential-form-page input::placeholder {
+  color: var(--text-muted);
+}
+
+.mint-nft-credential-form-page button[type="submit"] {
+  width: auto; /* Allow button to size to its content */
+  margin: 0.5rem 0; /* Adjust margin if needed */
+}
+
+/* Style for the message display */
+.mint-nft-credential-form-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; /* Ensure space below message */
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.mint-nft-credential-form-page .message.error {
+  background-color: var(--error-color);
+}
+.mint-nft-credential-form-page .message.info {
+  background-color: var(--info-color);
+}
+.mint-nft-credential-form-page .message.success {
+  background-color: var(--success-color);
+}
+
+
+/* Back to Dashboard Button */
+.mint-nft-credential-form-page.container > button { /* Target the button directly under the main container */
+  background-color: var(--background-secondary-section); /* Secondary button style */
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 1.5rem; /* Space from previous elements */
+  margin-left: 0; /* Align left if not part of a button group */
+  margin-right: 0;
+}
+
+.mint-nft-credential-form-page.container > button:hover {
+  background-color: var(--background-page); /* Lighter on hover */
+  border-color: var(--text-muted);
+  transform: none; /* Remove translateY for secondary buttons */
+  box-shadow: none;
+}
+
+
+/* Responsive Adjustments for MintNFTCredentialForm.jsx */
+@media (max-width: 768px) {
+  .mint-nft-credential-form-page.container {
+    padding: 1.5rem;
+  }
+  .mint-nft-credential-form-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .mint-nft-credential-form-page .form-group label {
+    font-size: 0.9em;
+  }
+  .mint-nft-credential-form-page input[type="text"],
+  .mint-nft-credential-form-page input[type="file"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+  .mint-nft-credential-form-page button[type="submit"],
+  .mint-nft-credential-form-page.container > button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .mint-nft-credential-form-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mint-nft-credential-form-page.container {
+    padding: 1rem;
+  }
+  .mint-nft-credential-form-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .mint-nft-credential-form-page .form-group {
+    margin-bottom: 1rem;
+  }
+  .mint-nft-credential-form-page .form-group label {
+    font-size: 0.85em;
+    margin-bottom: 0.5rem;
+  }
+  .mint-nft-credential-form-page input[type="text"],
+  .mint-nft-credential-form-page input[type="file"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+  }
+  .mint-nft-credential-form-page button[type="submit"],
+  .mint-nft-credential-form-page.container > button {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                     BatchMintNFTCredentialsForm.jsx Styles                 */
+/* -------------------------------------------------------------------------- */
+
+.batch-mint-nft-form-page.container {
+  width: 100%;
+  max-width: 800px; /* Slightly wider for multiple entries */
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.batch-mint-nft-form-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.batch-mint-nft-form-page.container form {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.batch-mint-nft-form-page .batch-entry {
+  background-color: var(--background-secondary-section); /* Light gray for batch entry */
+  padding: 1.5rem; /* Increased padding slightly for better spacing */
+  border-radius: 0.75rem; /* Slightly larger border-radius */
+  margin-bottom: 1.5rem; /* Space between each batch entry */
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 4px var(--box-shadow-light); /* Subtle shadow for entries */
+  position: relative; /* For positioning the remove button */
+}
+
+.batch-mint-nft-form-page .batch-entry h4 {
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* Space below h4 */
+  color: var(--text-dark); /* Dark text for batch entry titles */
+  font-size: 1.15em; /* Slightly larger font size */
+  border-bottom: 1px dashed var(--border-light); /* Dashed separator */
+  padding-bottom: 0.75rem;
+  display: flex; /* To align title and remove button */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.batch-mint-nft-form-page .batch-entry .remove-entry {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+  padding: 0.3em 0.8em;
+  font-size: 0.9em;
+  color: var(--text-light);
+  margin: 0; /* Remove default button margins */
+  box-shadow: none; /* Remove shadow for this small button */
+  transform: none; /* Remove transform on hover */
+}
+.batch-mint-nft-form-page .batch-entry .remove-entry:hover {
+  background-color: #c82333; /* Darker red on hover */
+  border-color: #c82333;
+}
+
+
+.batch-mint-nft-form-page .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.batch-mint-nft-form-page .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.batch-mint-nft-form-page input[type="text"],
+.batch-mint-nft-form-page input[type="file"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.batch-mint-nft-form-page input[type="file"] {
+  padding: 0.6em 0.8em;
+  background-color: var(--background-secondary-section);
+}
+
+.batch-mint-nft-form-page input[type="text"]:focus,
+.batch-mint-nft-form-page input[type="file"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.batch-mint-nft-form-page input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Add Another Credential Button */
+.batch-mint-nft-form-page button:not([type="submit"]):not(.remove-entry) {
+  background-color: var(--background-secondary-section); /* Secondary button style */
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 1rem; /* Space from last entry */
+  margin-bottom: 1rem; /* Space before submit button */
+  margin-left: 0; /* Align left */
+}
+
+.batch-mint-nft-form-page button:not([type="submit"]):not(.remove-entry):hover {
+  background-color: var(--background-page); /* Lighter on hover */
+  border-color: var(--text-muted);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Batch Mint Submit Button */
+.batch-mint-nft-form-page button[type="submit"] {
+  width: auto;
+  margin-top: 1rem; /* Space from "Add Another" button */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.batch-mint-nft-form-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.batch-mint-nft-form-page .message.error {
+  background-color: var(--error-color);
+}
+.batch-mint-nft-form-page .message.info {
+  background-color: var(--info-color);
+}
+.batch-mint-nft-form-page .message.success {
+  background-color: var(--success-color);
+}
+
+/* Back to Dashboard Button */
+.batch-mint-nft-form-page.container > button:last-of-type { /* Target the last button directly under .container */
+  background-color: var(--background-secondary-section);
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 2rem; /* More space from form content */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.batch-mint-nft-form-page.container > button:last-of-type:hover {
+  background-color: var(--background-page);
+  border-color: var(--text-muted);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Adjustments for BatchMintNFTCredentialsForm.jsx */
+@media (max-width: 768px) {
+  .batch-mint-nft-form-page.container {
+    padding: 1.5rem;
+  }
+  .batch-mint-nft-form-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .batch-mint-nft-form-page .batch-entry {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .batch-mint-nft-form-page .batch-entry h4 {
+    font-size: 1.05em;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+  }
+  .batch-mint-nft-form-page .form-group {
+    margin-bottom: 1.25rem;
+  }
+  .batch-mint-nft-form-page .form-group label {
+    font-size: 0.9em;
+  }
+  .batch-mint-nft-form-page input[type="text"],
+  .batch-mint-nft-form-page input[type="file"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+  .batch-mint-nft-form-page button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .batch-mint-nft-form-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .batch-mint-nft-form-page.container {
+    padding: 1rem;
+  }
+  .batch-mint-nft-form-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .batch-mint-nft-form-page .batch-entry {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .batch-mint-nft-form-page .batch-entry h4 {
+    font-size: 1em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+  }
+  .batch-mint-nft-form-page .form-group {
+    margin-bottom: 1rem;
+  }
+  .batch-mint-nft-form-page .form-group label {
+    font-size: 0.85em;
+    margin-bottom: 0.5rem;
+  }
+  .batch-mint-nft-form-page input[type="text"],
+  .batch-mint-nft-form-page input[type="file"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+  }
+  .batch-mint-nft-form-page button {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                    IssueGeneralCredentialForm.jsx Styles                   */
+/* -------------------------------------------------------------------------- */
+
+.issue-general-credential-form-page.container {
+  width: 100%;
+  max-width: 700px; /* A reasonable max-width for forms for readability */
+  margin: 0 auto; /* Center within the available space of issuer-content-area */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.issue-general-credential-form-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.issue-general-credential-form-page.container form {
+  margin-bottom: 2rem; /* Space below the form before messages/buttons */
+  text-align: left; /* Align form content to the left */
+}
+
+.issue-general-credential-form-page .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left; /* Ensure label and input align left within their group */
+}
+
+.issue-general-credential-form-page .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+/* Reusing global input styles for text inputs and file inputs */
+.issue-general-credential-form-page input[type="text"],
+.issue-general-credential-form-page input[type="file"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.issue-general-credential-form-page input[type="file"] {
+  padding: 0.6em 0.8em; /* Slightly different padding for file input */
+  background-color: var(--background-secondary-section); /* Slightly different background for file input */
+}
+
+.issue-general-credential-form-page input[type="text"]:focus,
+.issue-general-credential-form-page input[type="file"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.issue-general-credential-form-page input::placeholder {
+  color: var(--text-muted);
+}
+
+.issue-general-credential-form-page button[type="submit"] {
+  width: auto; /* Allow button to size to its content */
+  margin: 0.5rem 0; /* Adjust margin if needed */
+}
+
+/* Style for the message display */
+.issue-general-credential-form-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; /* Ensure space below message */
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.issue-general-credential-form-page .message.error {
+  background-color: var(--error-color);
+}
+.issue-general-credential-form-page .message.info {
+  background-color: var(--info-color);
+}
+.issue-general-credential-form-page .message.success {
+  background-color: var(--success-color);
+}
+
+
+/* Back to Dashboard Button */
+.issue-general-credential-form-page.container > button { /* Target the button directly under the main container */
+  background-color: var(--background-secondary-section); /* Secondary button style */
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 1.5rem; /* Space from previous elements */
+  margin-left: 0; /* Align left if not part of a button group */
+  margin-right: 0;
+}
+
+.issue-general-credential-form-page.container > button:hover {
+  background-color: var(--background-page); /* Lighter on hover */
+  border-color: var(--text-muted);
+  transform: none; /* Remove translateY for secondary buttons */
+  box-shadow: none;
+}
+
+
+/* Responsive Adjustments for IssueGeneralCredentialForm.jsx */
+@media (max-width: 768px) {
+  .issue-general-credential-form-page.container {
+    padding: 1.5rem;
+  }
+  .issue-general-credential-form-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .issue-general-credential-form-page .form-group label {
+    font-size: 0.9em;
+  }
+  .issue-general-credential-form-page input[type="text"],
+  .issue-general-credential-form-page input[type="file"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+  .issue-general-credential-form-page button[type="submit"],
+  .issue-general-credential-form-page.container > button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .issue-general-credential-form-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .issue-general-credential-form-page.container {
+    padding: 1rem;
+  }
+  .issue-general-credential-form-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .issue-general-credential-form-page .form-group {
+    margin-bottom: 1rem;
+  }
+  .issue-general-credential-form-page .form-group label {
+    font-size: 0.85em;
+    margin-bottom: 0.5rem;
+  }
+  .issue-general-credential-form-page input[type="text"],
+  .issue-general-credential-form-page input[type="file"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+  }
+  .issue-general-credential-form-page button[type="submit"],
+  .issue-general-credential-form-page.container > button {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                           IssuerProfile.jsx Styles                         */
+/* -------------------------------------------------------------------------- */
+
+.issuer-profile-page.container {
+  width: 100%;
+  max-width: 900px; /* A good width for displaying profile details */
+  margin: 0 auto; /* Center within the available space of issuer-content-area */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.issuer-profile-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Reusing .details-section for the main profile information block */
+.issuer-profile-page .details-section {
+    background-color: var(--background-secondary-section); /* Light gray background */
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin-top: 2rem; /* Space above this section */
+    margin-bottom: 2rem; /* Space below this section */
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.issuer-profile-page .details-section h3 {
+    color: var(--primary-blue); /* Primary blue for titles */
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.issuer-profile-page .details-section p {
+    margin-bottom: 0.75rem;
+    color: var(--text-medium);
+    font-size: 1em;
+    word-wrap: break-word; /* Ensure long addresses wrap */
+}
+
+.issuer-profile-page .details-section p strong {
+    color: var(--text-dark); /* Darker for strong text */
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+/* Styles for Issuer Logo */
+.issuer-profile-page .issuer-images-logo {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem; /* Space below the logo */
+  background-color: var(--background-page); /* Page background for logo background */
+  display: block; /* Make it a block element to control margin */
+}
+
+/* Styles for Additional Images */
+.issuer-profile-page .issuer-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem; /* Space from "Additional Images" text */
+    margin-bottom: 1rem; /* Space before next section/button */
+}
+
+.issuer-profile-page .issuer-images img {
+    max-width: 180px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px var(--box-shadow-light);
+}
+
+/* Back to Dashboard button group */
+.issuer-profile-page .button-group {
+    margin-top: 2rem; /* Space above the button group */
+    justify-content: center;
+}
+
+/* Responsive Adjustments for IssuerProfile.jsx */
+@media (max-width: 768px) {
+  .issuer-profile-page.container {
+    padding: 1.5rem;
+    margin: 0 auto 1.5rem auto; /* Adjust margins for smaller screens */
+  }
+  .issuer-profile-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .issuer-profile-page .details-section {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .issuer-profile-page .details-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .issuer-profile-page .details-section p {
+    font-size: 0.95em;
+    margin-bottom: 0.6rem;
+  }
+  .issuer-profile-page .issuer-images-logo {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 0.75rem;
+  }
+  .issuer-profile-page .issuer-images img {
+    max-width: 150px;
+    max-height: 100px;
+  }
+  .issuer-profile-page .button-group {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .issuer-profile-page.container {
+    padding: 1rem;
+    margin: 0 auto 1rem auto;
+  }
+  .issuer-profile-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-profile-page .details-section {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-profile-page .details-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+  }
+  .issuer-profile-page .details-section p {
+    font-size: 0.9em;
+    margin-bottom: 0.5rem;
+  }
+  .issuer-profile-page .issuer-images-logo {
+    max-width: 60px;
+    max-height: 60px;
+    margin-bottom: 0.5rem;
+  }
+  .issuer-profile-page .issuer-images img {
+    max-width: 120px;
+    max-height: 80px;
+    gap: 0.75rem;
+  }
+  .issuer-profile-page .button-group {
+    margin-top: 1rem;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                       IssuerCredentialDetails.jsx Styles                   */
+/* -------------------------------------------------------------------------- */
+
+.issuer-credential-details-page.container {
+  width: 100%;
+  max-width: 900px; /* A good width for displaying details */
+  margin: 0 auto; /* Center within the available space of issuer-content-area */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.issuer-credential-details-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Reusing .message for status updates */
+.issuer-credential-details-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.issuer-credential-details-page .message.error {
+  background-color: var(--error-color);
+}
+.issuer-credential-details-page .message.info {
+  background-color: var(--info-color);
+}
+.issuer-credential-details-page .message.success {
+  background-color: var(--success-color);
+}
+
+/* Credential Information Section (reusing .credential-info) */
+.issuer-credential-details-page .credential-info {
+    background-color: var(--background-secondary-section);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.issuer-credential-details-page .credential-info p {
+    margin-bottom: 0.75rem;
+    color: var(--text-medium);
+    font-size: 1em;
+    word-wrap: break-word; /* Ensure long addresses wrap */
+}
+
+.issuer-credential-details-page .credential-info p strong {
+    color: var(--text-dark);
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+/* Credential Display Section (reusing .credential-display) */
+.issuer-credential-details-page .credential-display {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--background-card);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.issuer-credential-details-page .credential-display h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-blue);
+}
+
+.issuer-credential-details-page .credential-display img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    margin-top: 1rem;
+    background-color: var(--background-page);
+}
+
+/* Button Group for actions (e.g., Revoke) */
+.issuer-credential-details-page .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem; /* Spacing from the content above */
+    margin-bottom: 2rem; /* Spacing before the back button */
+}
+
+.issuer-credential-details-page .button-group button {
+    margin: 0; /* Override default button margin if in a group */
+}
+
+/* Specific style for danger button (Revoke) */
+.issuer-credential-details-page .button-danger {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+  color: var(--text-light);
+}
+
+.issuer-credential-details-page .button-danger:hover {
+  background-color: #c82333; /* Darker red */
+  border-color: #c82333;
+}
+
+/* Back to Dashboard Button (outside of button-group) */
+.issuer-credential-details-page.container > .button-group:last-of-type {
+  margin-top: 2rem; /* Ensure good spacing for the final button group */
+}
+
+
+/* Responsive Adjustments for IssuerCredentialDetails.jsx */
+@media (max-width: 768px) {
+  .issuer-credential-details-page.container {
+    padding: 1.5rem;
+    margin: 0 auto 1.5rem auto;
+  }
+  .issuer-credential-details-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .issuer-credential-details-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-credential-details-page .credential-info,
+  .issuer-credential-details-page .credential-display {
+    padding: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .issuer-credential-details-page .credential-info p {
+    font-size: 0.95em;
+    margin-bottom: 0.6rem;
+  }
+  .issuer-credential-details-page .credential-display h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-credential-details-page .button-group {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .issuer-credential-details-page.container > .button-group:last-of-type {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .issuer-credential-details-page.container {
+    padding: 1rem;
+    margin: 0 auto 1rem auto;
+  }
+  .issuer-credential-details-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-credential-details-page .message {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9em;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .issuer-credential-details-page .credential-info,
+  .issuer-credential-details-page .credential-display {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-credential-details-page .credential-info p {
+    font-size: 0.9em;
+    margin-bottom: 0.5rem;
+  }
+  .issuer-credential-details-page .credential-display h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  .issuer-credential-details-page .button-group button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .issuer-credential-details-page .button-group {
+    gap: 0.75rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .issuer-credential-details-page.container > .button-group:last-of-type {
+    margin-top: 1rem;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                           AdminDashboard.jsx Styles                        */
+/* -------------------------------------------------------------------------- */
+
+.admin-dashboard-page.container {
+  width: 100%;
+  max-width: 1600px; /* Adjust max-width as needed for admin content */
+  margin: 2rem auto; /* Consistent margin for main containers */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.admin-dashboard-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Top control group: Add Issuer button and Total count */
+.admin-dashboard-page .admin-controls-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.admin-dashboard-page .admin-controls-top p {
+  margin: 0; /* Remove default paragraph margin */
+  color: var(--text-dark);
+  font-size: 1.1em;
+}
+
+.admin-dashboard-page .admin-controls-top p strong {
+  color: var(--primary-blue);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* Filter and Search Group for Issuers */
+.admin-dashboard-page .admin-filter-search-group {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center; /* Center items when space allows */
+  align-items: center; /* Vertically align items */
+}
+
+.admin-dashboard-page .admin-filter-search-group .input-search {
+  width: auto;
+  flex-grow: 1; /* Allow search input to grow */
+  min-width: 200px; /* Minimum width for search input */
+  /* Reusing global input styles */
+  background-color: var(--background-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-dark);
+  padding: 0.8em 1em;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.admin-dashboard-page .admin-filter-search-group .select-filter {
+  width: auto;
+  min-width: 150px; /* Minimum width for select filter */
+  /* Reusing global select styles */
+  background-color: var(--background-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-dark);
+  padding: 0.8em 1em;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.admin-dashboard-page .admin-filter-search-group .input-search:focus,
+.admin-dashboard-page .admin-filter-search-group .select-filter:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.admin-dashboard-page .admin-filter-search-group button {
+    margin: 0; /* Remove default button margins in this group */
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Loading and No issuers messages */
+.admin-dashboard-page p:has(strong) + p { /* Targets p after p strong (e.g., "Loading issuers...") */
+  margin-top: 1.5rem;
+  color: var(--text-medium);
+}
+.admin-dashboard-page .message.error {
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+
+/* Grid for Issuer Cards (reusing global .grid-container and .card styles) */
+.admin-dashboard-page .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.admin-dashboard-page .card {
+  background-color: var(--background-secondary-section);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px var(--box-shadow-light);
+  text-align: left;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-light);
+}
+
+.admin-dashboard-page .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--box-shadow-medium);
+}
+
+.admin-dashboard-page .card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  background-color: var(--light-blue-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 1.1em;
+  border: 1px dashed var(--border-light);
+}
+
+.admin-dashboard-page .card h3 {
+  font-size: 1.3em;
+  margin-bottom: 0.75rem;
+  color: var(--primary-blue);
+}
+
+.admin-dashboard-page .card p {
+  font-size: 0.9em;
+  color: var(--text-medium);
+  margin-bottom: 0.4rem;
+  word-wrap: break-word;
+}
+
+
+/* Responsive Adjustments for AdminDashboard.jsx */
+@media (max-width: 1024px) {
+  .admin-dashboard-page.container {
+    max-width: 90%;
+    padding: 1.5rem;
+  }
+
+  .admin-dashboard-page .admin-controls-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .admin-dashboard-page .admin-controls-top p {
+    margin-top: 1rem; /* Space between button and text */
+  }
+
+  .admin-dashboard-page .admin-filter-search-group {
+    flex-direction: column; /* Stack filter and search inputs */
+    align-items: stretch; /* Stretch items to full width */
+  }
+
+  .admin-dashboard-page .admin-filter-search-group .input-search,
+  .admin-dashboard-page .admin-filter-search-group .select-filter,
+  .admin-dashboard-page .admin-filter-search-group button {
+    width: 100%; /* Take full width when stacked */
+    min-width: unset; /* Remove min-width constraint */
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard-page.container {
+    padding: 1rem;
+    margin: 1.5rem auto;
+  }
+  .admin-dashboard-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .admin-dashboard-page .admin-controls-top button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .admin-dashboard-page .admin-controls-top p {
+    font-size: 1em;
+  }
+  .admin-dashboard-page .admin-controls-top p strong {
+    font-size: 1.1em;
+  }
+  .admin-dashboard-page .admin-filter-search-group {
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .admin-dashboard-page .grid-container {
+    grid-template-columns: 1fr; /* Single column for cards */
+  }
+  .admin-dashboard-page .card {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard-page.container {
+    padding: 0.75rem;
+    margin: 1rem auto;
+  }
+  .admin-dashboard-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .admin-dashboard-page .admin-controls-top {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .admin-dashboard-page .admin-controls-top button {
+    padding: 0.5em 0.9em;
+    font-size: 0.85em;
+  }
+  .admin-dashboard-page .admin-controls-top p {
+    font-size: 0.9em;
+  }
+  .admin-dashboard-page .admin-controls-top p strong {
+    font-size: 1em;
+  }
+  .admin-dashboard-page .admin-filter-search-group {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .admin-dashboard-page .admin-filter-search-group input,
+  .admin-dashboard-page .admin-filter-search-group select,
+  .admin-dashboard-page .admin-filter-search-group button {
+    padding: 0.6em 0.8em;
+    font-size: 0.85em;
+  }
+  .admin-dashboard-page .card h3 {
+    font-size: 1.1em;
+  }
+  .admin-dashboard-page .card p {
+    font-size: 0.8em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                            AddIssuerForm.jsx Styles                        */
+/* -------------------------------------------------------------------------- */
+
+.add-issuer-form-page.container {
+  width: 100%;
+  max-width: 700px; /* A reasonable max-width for forms */
+  margin: 2rem auto; /* Consistent margin for main containers */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.add-issuer-form-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.add-issuer-form-page.container form {
+  margin-bottom: 2rem; /* Space below the form before messages/buttons */
+  text-align: left; /* Align form content to the left */
+}
+
+/* Reusing .message for status updates */
+.add-issuer-form-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.add-issuer-form-page .message.error {
+  background-color: var(--error-color);
+}
+.add-issuer-form-page .message.info {
+  background-color: var(--info-color);
+}
+.add-issuer-form-page .message.success {
+  background-color: var(--success-color);
+}
+
+.add-issuer-form-page .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.add-issuer-form-page .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+/* Input fields within the form */
+.add-issuer-form-page input[type="text"],
+.add-issuer-form-page input[type="file"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.add-issuer-form-page input[type="file"] {
+  padding: 0.6em 0.8em;
+  background-color: var(--background-secondary-section);
+}
+
+.add-issuer-form-page input[type="text"]:focus,
+.add-issuer-form-page input[type="file"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.add-issuer-form-page input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Submit button */
+.add-issuer-form-page button[type="submit"] {
+  width: auto;
+  margin: 0.5rem 0; /* Adjust margin if needed */
+}
+
+/* Back to Dashboard button */
+.add-issuer-form-page.container > button:last-of-type { /* Target the last button directly under .container */
+  background-color: var(--background-secondary-section);
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 1.5rem; /* Space from previous elements */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.add-issuer-form-page.container > button:last-of-type:hover {
+  background-color: var(--background-page);
+  border-color: var(--text-muted);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Adjustments for AddIssuerForm.jsx */
+@media (max-width: 768px) {
+  .add-issuer-form-page.container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+  .add-issuer-form-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .add-issuer-form-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .form-group label {
+    font-size: 0.9em;
+  }
+  .add-issuer-form-page input[type="text"],
+  .add-issuer-form-page input[type="file"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+  .add-issuer-form-page button[type="submit"],
+  .add-issuer-form-page.container > button:last-of-type {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-issuer-form-page.container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  .add-issuer-form-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .message {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9em;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .add-issuer-form-page .form-group {
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .form-group label {
+    font-size: 0.85em;
+    margin-bottom: 0.5rem;
+  }
+  .add-issuer-form-page input[type="text"],
+  .add-issuer-form-page input[type="file"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+  }
+  .add-issuer-form-page button[type="submit"],
+  .add-issuer-form-page.container > button:last-of-type {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                            AddIssuerForm.jsx Styles                        */
+/* -------------------------------------------------------------------------- */
+
+.add-issuer-form-page.container {
+  width: 100%;
+  max-width: 700px; /* A reasonable max-width for forms */
+  margin: 2rem auto; /* Consistent margin for main containers */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.add-issuer-form-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.add-issuer-form-page.container form {
+  margin-bottom: 2rem; /* Space below the form before messages/buttons */
+  text-align: left; /* Align form content to the left */
+}
+
+/* Reusing .message for status updates */
+.add-issuer-form-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.add-issuer-form-page .message.error {
+  background-color: var(--error-color);
+}
+.add-issuer-form-page .message.info {
+  background-color: var(--info-color);
+}
+.add-issuer-form-page .message.success {
+  background-color: var(--success-color);
+}
+
+.add-issuer-form-page .form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.add-issuer-form-page .form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+/* Input fields within the form */
+.add-issuer-form-page input[type="text"],
+.add-issuer-form-page input[type="file"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.add-issuer-form-page input[type="file"] {
+  padding: 0.6em 0.8em;
+  background-color: var(--background-secondary-section);
+}
+
+.add-issuer-form-page input[type="text"]:focus,
+.add-issuer-form-page input[type="file"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.add-issuer-form-page input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Submit button */
+.add-issuer-form-page button[type="submit"] {
+  width: auto;
+  margin: 0.5rem 0; /* Adjust margin if needed */
+}
+
+/* Back to Dashboard button */
+.add-issuer-form-page.container > button:last-of-type { /* Target the last button directly under .container */
+  background-color: var(--background-secondary-section);
+  border-color: var(--border-light);
+  color: var(--text-dark);
+  margin-top: 1.5rem; /* Space from previous elements */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.add-issuer-form-page.container > button:last-of-type:hover {
+  background-color: var(--background-page);
+  border-color: var(--text-muted);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Adjustments for AddIssuerForm.jsx */
+@media (max-width: 768px) {
+  .add-issuer-form-page.container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+  .add-issuer-form-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .add-issuer-form-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .form-group label {
+    font-size: 0.9em;
+  }
+  .add-issuer-form-page input[type="text"],
+  .add-issuer-form-page input[type="file"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+  }
+  .add-issuer-form-page button[type="submit"],
+  .add-issuer-form-page.container > button:last-of-type {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-issuer-form-page.container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  .add-issuer-form-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .message {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9em;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .add-issuer-form-page .form-group {
+    margin-bottom: 1rem;
+  }
+  .add-issuer-form-page .form-group label {
+    font-size: 0.85em;
+    margin-bottom: 0.5rem;
+  }
+  .add-issuer-form-page input[type="text"],
+  .add-issuer-form-page input[type="file"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+  }
+  .add-issuer-form-page button[type="submit"],
+  .add-issuer-form-page.container > button:last-of-type {
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                           AdminIssuerDetails.jsx Styles                    */
+/* -------------------------------------------------------------------------- */
+
+.admin-issuer-details-page.container {
+  width: 100%;
+  max-width: 1200px; /* A good width for displaying details and actions */
+  margin: 2rem auto; /* Consistent margin for main containers */
+  padding: 2rem;
+  background-color: var(--background-card);
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px var(--box-shadow-medium);
+  text-align: center;
+}
+
+.admin-issuer-details-page.container h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Reusing .message for status updates */
+.admin-issuer-details-page .message {
+  padding: 1rem 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.admin-issuer-details-page .message.error {
+  background-color: var(--error-color);
+}
+.admin-issuer-details-page .message.info {
+  background-color: var(--info-color);
+}
+.admin-issuer-details-page .message.success {
+  background-color: var(--success-color);
+}
+
+/* Basic Information Section (reusing .details-section) */
+.admin-issuer-details-page .details-section {
+    background-color: var(--background-secondary-section);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.admin-issuer-details-page .details-section h3 {
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.admin-issuer-details-page .details-section p {
+    margin-bottom: 0.75rem;
+    color: var(--text-medium);
+    font-size: 1em;
+    word-wrap: break-word;
+}
+
+.admin-issuer-details-page .details-section p strong {
+    color: var(--text-dark);
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+/* Styles for Issuer Logo */
+.admin-issuer-details-page .issuer-images-logo {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: contain;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  background-color: var(--background-page);
+  display: block;
+}
+
+/* Styles for Additional Images */
+.admin-issuer-details-page .issuer-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-issuer-details-page .issuer-images img {
+    max-width: 180px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px var(--box-shadow-light);
+}
+
+/* Admin Actions Heading */
+.admin-issuer-details-page h3:has(+ .action-card) { /* Target h3 directly before an action card */
+  margin-top: 2rem; /* Space above admin actions section */
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-blue); /* Emphasize admin actions section */
+  font-size: 1.75rem;
+}
+
+
+/* Action Cards (reusing .action-card) */
+.admin-issuer-details-page .action-card {
+    background-color: var(--background-secondary-section);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem; /* Space between action cards */
+    text-align: left;
+    box-shadow: 0 4px 8px var(--box-shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.admin-issuer-details-page .action-card h4 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    border-bottom: 1px dashed var(--border-light);
+    padding-bottom: 0.75rem;
+}
+
+.admin-issuer-details-page .action-card p {
+    margin-bottom: 1.5rem;
+    color: var(--text-medium);
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+/* Input fields within action cards */
+.admin-issuer-details-page .action-card input[type="number"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1px solid var(--border-light);
+  border-radius: 0.375rem;
+  background-color: var(--background-card);
+  color: var(--text-dark);
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin-bottom: 1.5rem; /* Space below input */
+}
+
+.admin-issuer-details-page .action-card input[type="number"]:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.admin-issuer-details-page .action-card input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Buttons within action cards */
+.admin-issuer-details-page .action-card button {
+  width: auto;
+  margin: 0 0.5rem 0 0; /* Adjust margin for multiple buttons or alignment */
+}
+
+/* Specific styles for danger buttons (Deactivate, Remove) */
+.admin-issuer-details-page .button-danger {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+  color: var(--text-light);
+}
+
+.admin-issuer-details-page .button-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+/* Back to Dashboard button group */
+.admin-issuer-details-page .button-group {
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+/* Confirmation Modal Styles (reusing global styles, ensure they are defined) */
+/* If ConfirmationModal has its own CSS in a separate file, ensure it's imported */
+
+
+/* Responsive Adjustments for AdminIssuerDetails.jsx */
+@media (max-width: 768px) {
+  .admin-issuer-details-page.container {
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+  }
+  .admin-issuer-details-page.container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .admin-issuer-details-page .message {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .details-section {
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .admin-issuer-details-page .details-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  .admin-issuer-details-page .details-section p {
+    font-size: 0.95em;
+    margin-bottom: 0.6rem;
+  }
+  .admin-issuer-details-page .issuer-images-logo {
+    max-width: 80px;
+    max-height: 80px;
+    margin-bottom: 0.75rem;
+  }
+  .admin-issuer-details-page .issuer-images img {
+    max-width: 150px;
+    max-height: 100px;
+  }
+  .admin-issuer-details-page h3:has(+ .action-card) {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .action-card {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .admin-issuer-details-page .action-card h4 {
+    font-size: 1.15rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+  }
+  .admin-issuer-details-page .action-card p {
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .action-card input[type="number"] {
+    padding: 0.7em 0.8em;
+    font-size: 0.9em;
+    margin-bottom: 1.25rem;
+  }
+  .admin-issuer-details-page .action-card button {
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+  .admin-issuer-details-page .button-group {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-issuer-details-page.container {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+  .admin-issuer-details-page.container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .message {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9em;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .admin-issuer-details-page .details-section {
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .details-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+  }
+  .admin-issuer-details-page .details-section p {
+    font-size: 0.9em;
+    margin-bottom: 0.5rem;
+  }
+  .admin-issuer-details-page .issuer-images-logo {
+    max-width: 60px;
+    max-height: 60px;
+    margin-bottom: 0.5rem;
+  }
+  .admin-issuer-details-page .issuer-images img {
+    max-width: 120px;
+    max-height: 80px;
+    gap: 0.75rem;
+  }
+  .admin-issuer-details-page h3:has(+ .action-card) {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .admin-issuer-details-page .action-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .action-card h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+  }
+  .admin-issuer-details-page .action-card p {
+    font-size: 0.85em;
+    margin-bottom: 0.75rem;
+  }
+  .admin-issuer-details-page .action-card input[type="number"] {
+    padding: 0.6em 0.7em;
+    font-size: 0.85em;
+    margin-bottom: 1rem;
+  }
+  .admin-issuer-details-page .action-card button {
+    padding: 0.5em 0.9em;
+    font-size: 0.85em;
+  }
+  .admin-issuer-details-page .button-group {
+    margin-top: 1rem;
+  }
+}
+/* -------------------------------------------------------------------------- */
+/*                         ConfirmationModal.jsx Styles                       */
+/* -------------------------------------------------------------------------- */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal-content {
+  background-color: var(--background-card); /* White modal background */
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 16px var(--box-shadow-medium);
+  max-width: 500px; /* Max width for the modal dialog */
+  width: 90%; /* Take 90% width on smaller screens */
+  text-align: center;
+  border: 1px solid var(--border-light);
+}
+
+.modal-content h3 {
+  color: var(--text-dark); /* Dark text for modal titles */
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.modal-content p {
+  color: var(--text-medium); /* Medium text for modal messages */
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 1rem; /* Space between buttons */
+  margin-top: 1.5rem;
+}
+
+/* Reusing general button styles for primary button (confirmText default) */
+/* .button-primary is typically the default blue button */
+
+.modal-actions .button-secondary {
+  background-color: var(--background-secondary-section); /* Light gray for secondary button */
+  border-color: var(--border-light);
+  color: var(--text-dark);
+}
+
+.modal-actions .button-secondary:hover {
+  background-color: var(--background-page); /* Lighter on hover */
+  border-color: var(--text-muted);
+}
+
+/* For the critical "Remove Issuer" or "Transfer Admin" actions */
+.modal-actions .button-danger {
+  background-color: var(--error-color);
+  border-color: var(--error-color);
+  color: var(--text-light);
+}
+
+.modal-actions .button-danger:hover {
+  background-color: #c82333; /* Darker red */
+  border-color: #c82333;
+}
+
+/* Responsive Adjustments for ConfirmationModal.jsx */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  .modal-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.8rem;
+  }
+  .modal-content p {
+    font-size: 0.95em;
+    margin-bottom: 1.25rem;
+  }
+  .modal-actions {
+    flex-wrap: wrap; /* Allow buttons to wrap */
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .modal-actions button {
+    flex-grow: 1; /* Allow buttons to grow to fill space */
+    min-width: 120px; /* Minimum width for buttons */
+    padding: 0.6em 1em;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1rem;
+    max-width: 95%;
+  }
+  .modal-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+  .modal-content p {
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+  }
+  .modal-actions {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: stretch; /* Stretch buttons to full width */
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .modal-actions button {
+    min-width: unset; /* Remove min-width when stacked */
+    width: 100%; /* Take full width */
+    padding: 0.5em 0.8em;
+    font-size: 0.85em;
+  }
+}
