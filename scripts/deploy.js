@@ -1,4 +1,5 @@
 const hre = require("hardhat");
+require("dotenv").config(); // Ensure dotenv is configured to load environment variables
 
 async function main() {
   console.log("Starting SkillChain deployment to Base Sepolia...\n");
@@ -41,12 +42,17 @@ async function main() {
   await credentialNFT.deploymentTransaction().wait(5);
 
   // Deploy VerificationContract
+  const FRONTEND_RENDER_URL = process.env.FRONTEND_RENDER_URL; // <<< Read from .env
+  if (!FRONTEND_RENDER_URL) {
+    throw new Error("FRONTEND_RENDER_URL not set in .env file.");
+  }
   console.log("Deploying VerificationContract...");
   const VerificationContract = await hre.ethers.getContractFactory("VerificationContract");
   const verificationContract = await VerificationContract.deploy(
     credentialNFTAddress,
     issuerRegistryAddress,
-    credentialRegistryAddress
+    credentialRegistryAddress,
+    FRONTEND_RENDER_URL // <<< Pass the frontend URL here
   );
   await verificationContract.waitForDeployment();
   const verificationContractAddress = await verificationContract.getAddress();
@@ -55,14 +61,14 @@ async function main() {
   await verificationContract.deploymentTransaction().wait(5);
 
   // Summary
-  console.log("\n==================================================");
+  console.log("\n====================================================");
   console.log("DEPLOYMENT SUMMARY");
-  console.log("==================================================");
+  console.log("====================================================");
   console.log("IssuerRegistry:", issuerRegistryAddress);
   console.log("CredentialRegistry:", credentialRegistryAddress);
   console.log("CredentialNFT:", credentialNFTAddress);
   console.log("VerificationContract:", verificationContractAddress);
-  console.log("==================================================\n");
+  console.log("====================================================\n");
 
   // Save deployment addresses to file
   const fs = require("fs");
@@ -86,10 +92,11 @@ async function main() {
 
   console.log("Deployment completed successfully!");
   console.log("\nNext steps:");
-  console.log("1. Verify contracts on BaseScan");
-  console.log("2. Register first issuer using IssuerRegistry.registerIssuer()");
-  console.log("3. Verify issuer using IssuerRegistry.verifyIssuer()");
-  console.log("4. Start minting credentials using CredentialNFT.mintCredential()");
+  console.log("1. Add FRONTEND_RENDER_URL='https://skillchain-frontend-kcoy.onrender.com' to your .env file.");
+  console.log("2. Verify contracts on BaseScan");
+  console.log("3. Register first issuer using IssuerRegistry.registerIssuer()");
+  console.log("4. Verify issuer using IssuerRegistry.verifyIssuer()");
+  console.log("5. Start minting credentials using CredentialNFT.mintCredential()");
   console.log("   (Note: You can also use CredentialRegistry.issueCredential() if you prefer)");
 }
 
