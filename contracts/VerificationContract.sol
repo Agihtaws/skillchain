@@ -46,6 +46,7 @@ contract VerificationContract {
     address public credentialNFTAddress;
     address public issuerRegistryAddress;
     address public credentialRegistryAddress;
+    string public frontendBaseUrl; // <<< NEW: To store the deployed frontend URL
     
     struct VerificationRequest {
         address verifier;
@@ -101,18 +102,22 @@ contract VerificationContract {
         uint256 timestamp
     );
     
+    // MODIFIED CONSTRUCTOR: Now accepts frontendBaseUrl
     constructor(
         address _credentialNFTAddress,
         address _issuerRegistryAddress,
-        address _credentialRegistryAddress
+        address _credentialRegistryAddress,
+        string memory _frontendBaseUrl // <<< NEW: Parameter for frontend URL
     ) {
         require(_credentialNFTAddress != address(0), "Invalid credential NFT address");
         require(_issuerRegistryAddress != address(0), "Invalid issuer registry address");
         require(_credentialRegistryAddress != address(0), "Invalid credential registry address");
+        require(bytes(_frontendBaseUrl).length > 0, "Invalid frontend base URL"); // Ensure it's not empty
         
         credentialNFTAddress = _credentialNFTAddress;
         issuerRegistryAddress = _issuerRegistryAddress;
         credentialRegistryAddress = _credentialRegistryAddress;
+        frontendBaseUrl = _frontendBaseUrl; // <<< Store the frontend URL
     }
     
     // NEW: Public view function to get verification details (does NOT record history)
@@ -326,6 +331,7 @@ contract VerificationContract {
     return proof;
 }
 
+    // MODIFIED generateQRCodeData: Now uses frontendBaseUrl
     function generateQRCodeData(uint256 _credentialId)
         external
         view
@@ -335,8 +341,10 @@ contract VerificationContract {
         
         require(nftContract.tokenExists(_credentialId), "Credential does not exist");
         
+        // Construct the full URL using the stored frontendBaseUrl
         return string(abi.encodePacked(
-            "skillchain://verify/",
+            frontendBaseUrl, // Use the stored base URL
+            "/verify/",      // Your frontend's verification path
             _uint2str(_credentialId)
         ));
     }
