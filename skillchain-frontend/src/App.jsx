@@ -34,16 +34,16 @@ function AppContent() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthorizedIssuer, setIsAuthorizedIssuer] = useState(false);
   const [isStudent, setIsStudent] = useState(false);
-  const [loadingRoles, setLoadingRoles] = useState(true); // Initial state is loading
+  const [loadingRoles, setLoadingRoles] = useState(true);
 
   // Effect to verify user roles - runs on mount or when address/isConnected change
   useEffect(() => {
-    let isMounted = true; // Flag to prevent state updates on unmounted component
+    let isMounted = true;
 
     const verifyUserRoles = async () => {
-      if (!isMounted) return; // Prevent updating state if component unmounted
+      if (!isMounted) return;
 
-      setLoadingRoles(true); // Show global loading while roles are being determined
+      setLoadingRoles(true);
       console.log("AppContent: verifyUserRoles started. isConnected:", isConnected, "Address:", address);
 
       let currentAdminStatus = false;
@@ -54,32 +54,31 @@ function AppContent() {
         try {
           currentAdminStatus = await checkAdminStatus(address);
           currentIssuerStatus = await checkIssuerAuthorization(address);
-          currentStudentStatus = true; // Any connected user is considered a student/recipient
+          currentStudentStatus = true;
         } catch (error) {
           console.error('AppContent: Error checking user roles:', error);
         }
       }
 
-      if (isMounted) { // Only update state if still mounted
+      if (isMounted) {
         setIsAdmin(currentAdminStatus);
         setIsAuthorizedIssuer(currentIssuerStatus);
         setIsStudent(currentStudentStatus);
-        setLoadingRoles(false); // Hide global loading after roles are determined
+        setLoadingRoles(false);
       }
       console.log("AppContent: verifyUserRoles finished. isAdmin:", currentAdminStatus, "isAuthorizedIssuer:", currentIssuerStatus, "isStudent:", currentStudentStatus, "loadingRoles:", false);
     };
 
     verifyUserRoles();
 
-    // Cleanup function: runs when component unmounts or before re-running effect
     return () => {
       isMounted = false;
     };
-  }, [address, isConnected]); // ONLY re-run when address or isConnected change
+  }, [address, isConnected]);
 
   // Effect for redirect logic - runs when roles are loaded or path changes
   useEffect(() => {
-    if (loadingRoles) return; // Don't redirect until roles are loaded
+    if (loadingRoles) return;
 
     const matchesPathPrefix = (prefix, path) => {
         return path === prefix || path.startsWith(prefix + '/');
@@ -116,7 +115,7 @@ function AppContent() {
       navigate('/');
       return;
     }
-  }, [loadingRoles, isAdmin, isAuthorizedIssuer, isConnected, navigate, window.location.pathname]); // Add window.location.pathname to ensure redirect logic reacts to path changes
+  }, [loadingRoles, isAdmin, isAuthorizedIssuer, isConnected, navigate, window.location.pathname]);
 
   if (loadingRoles) {
     console.log("AppContent: Displaying global loading message for roles.");
@@ -128,7 +127,6 @@ function AppContent() {
     );
   }
 
-  // A generic wrapper for protected routes (admin or issuer or student)
   const ProtectedRouteWrapper = ({ children, requiredRole }) => {
     console.log("ProtectedRouteWrapper: Rendering for requiredRole:", requiredRole, "isConnected:", isConnected, "isAdmin:", isAdmin, "isAuthorizedIssuer:", isAuthorizedIssuer, "isStudent:", isStudent);
 
@@ -171,9 +169,37 @@ function AppContent() {
                 </div>
               )
             ) : (
-              <div className="container">
-                <h2>Connect Your Wallet</h2>
-                <p>Please connect your wallet to proceed.</p>
+              // Enhanced Landing Page Content when not connected
+              <div className="landing-page-unconnected container">
+                <h1 className="text-center">Welcome to SkillChain DApp</h1>
+                <p className="text-center lead-text">
+                  Your secure gateway to managing and verifying academic and professional credentials on the blockchain.
+                </p>
+
+                <div className="landing-features">
+                  <div className="feature-item">
+                    <h3>Decentralized & Tamper-Proof</h3>
+                    <p>Credentials are stored on the blockchain and IPFS, ensuring authenticity and immutability.</p>
+                  </div>
+                  <div className="feature-item">
+                    <h3>Empowering Students</h3>
+                    <p>Take full control of your digital qualifications and manage your privacy settings with ease.</p>
+                  </div>
+                  <div className="feature-item">
+                    <h3>Trusted Issuance</h3>
+                    <p>For institutions, issue verifiable NFT or general credentials with transparent administration.</p>
+                  </div>
+                  <div className="feature-item">
+                    <h3>Instant Verification</h3>
+                    <p>Anyone can instantly verify credentials with a simple ID, respecting recipient privacy.</p>
+                  </div>
+                </div>
+
+                <h2 className="text-center call-to-action">Connect Your Wallet to Get Started</h2>
+                
+                <p className="text-center">
+                  Access your personalized dashboard as a Student, Issuer, or Admin and unlock the full potential of SkillChain.
+                </p>
                 <ConnectButton />
               </div>
             )

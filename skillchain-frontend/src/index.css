@@ -3327,3 +3327,222 @@ button:disabled {
     font-size: 0.85em;
   }
 }
+/* -------------------------------------------------------------------------- */
+/*                          Landing Page (Unconnected) Styles                 */
+/* -------------------------------------------------------------------------- */
+
+.landing-page-unconnected.container {
+  /* Inherits basic container styles, but we'll adjust for a full-page feel */
+  min-height: calc(100vh - 4rem); /* Occupy remaining viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center;
+  max-width: 1500px; /* Limit width for readability */
+}
+
+.landing-page-unconnected.container h1 {
+  font-size: 3.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.landing-page-unconnected .lead-text {
+  font-size: 1.3em;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+.landing-page-unconnected .landing-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.landing-page-unconnected .feature-item {
+  background-color: var(--background-secondary-section);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px var(--box-shadow-light);
+  text-align: left;
+  border: 1px solid var(--border-light);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.landing-page-unconnected .feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--box-shadow-medium);
+}
+
+.landing-page-unconnected .feature-item h3 {
+  color: var(--primary-blue);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.landing-page-unconnected .feature-item p {
+  color: var(--text-medium);
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.landing-page-unconnected .call-to-action {
+  font-size: 2.25rem;
+  color: var(--text-dark);
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* --- KEY CHANGE FOR SPACE --- */
+/* Target the paragraph directly above the ConnectButton */
+.landing-page-unconnected.container p:last-of-type {
+  margin-bottom: 2rem; /* Adjust this value (e.g., 2.5rem, 3rem, 4rem) for more space */
+}
+/* --- END KEY CHANGE --- */
+
+
+/* Ensure the ConnectButton remains centered and styled */
+.landing-page-unconnected.container ._rk_button {
+  margin: 0 auto 0 auto !important; /* Reset top margin, let the paragraph above define the space */
+  display: block !important; /* Ensure margin: auto works for centering */
+  background-color: var(--primary-blue) !important;
+  color: var(--text-light) !important;
+  border: 1px solid var(--primary-blue) !important;
+  padding: 0.8em 1.8em !important;
+  font-size: 1.1em !important;
+  font-weight: 600 !important;
+  border-radius: 0.5rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease-in-out !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.landing-page-unconnected.container ._rk_button:hover {
+  background-color: var(--primary-blue-hover) !important;
+  border-color: var(--primary-blue-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Responsive adjustments for the landing page */
+@media (max-width: 1024px) {
+  .landing-page-unconnected.container {
+    padding: 3rem 1.5rem;
+  }
+  .landing-page-unconnected.container h1 {
+    font-size: 3rem;
+  }
+  .landing-page-unconnected .lead-text {
+    font-size: 1.2em;
+    margin-bottom: 2.5rem;
+  }
+  .landing-page-unconnected .landing-features {
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .landing-page-unconnected .feature-item h3 {
+    font-size: 1.15rem;
+  }
+  .landing-page-unconnected .feature-item p {
+    font-size: 0.9em;
+  }
+  .landing-page-unconnected .call-to-action {
+    font-size: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .landing-page-unconnected.container p:last-of-type { /* Adjust for responsive */
+    margin-bottom: 2rem;
+  }
+  .landing-page-unconnected.container ._rk_button {
+    padding: 0.7em 1.5em !important;
+    font-size: 1em !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-page-unconnected.container {
+    padding: 2.5rem 1rem;
+    min-height: calc(100vh - 3.5rem);
+  }
+  .landing-page-unconnected.container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .landing-page-unconnected .lead-text {
+    font-size: 1.1em;
+    margin-bottom: 2rem;
+  }
+  .landing-page-unconnected .landing-features {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .landing-page-unconnected .feature-item {
+    padding: 1.25rem;
+  }
+  .landing-page-unconnected .feature-item h3 {
+    font-size: 1.1rem;
+  }
+  .landing-page-unconnected .feature-item p {
+    font-size: 0.85em;
+  }
+  .landing-page-unconnected .call-to-action {
+    font-size: 1.75rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .landing-page-unconnected.container p:last-of-type { /* Adjust for responsive */
+    margin-bottom: 1.5rem;
+  }
+  .landing-page-unconnected.container ._rk_button {
+    padding: 0.6em 1.2em !important;
+    font-size: 0.9em !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page-unconnected.container {
+    padding: 2rem 0.75rem;
+    min-height: calc(100vh - 3rem);
+  }
+  .landing-page-unconnected.container h1 {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .landing-page-unconnected .lead-text {
+    font-size: 1em;
+    margin-bottom: 1.5rem;
+  }
+  .landing-page-unconnected .landing-features {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .landing-page-unconnected .feature-item {
+    padding: 1rem;
+  }
+  .landing-page-unconnected .feature-item h3 {
+    font-size: 1em;
+  }
+  .landing-page-unconnected .feature-item p {
+    font-size: 0.8em;
+  }
+  .landing-page-unconnected .call-to-action {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .landing-page-unconnected.container p:last-of-type { /* Adjust for responsive */
+    margin-bottom: 1rem;
+  }
+  .landing-page-unconnected.container ._rk_button {
+    padding: 0.5em 1em !important;
+    font-size: 0.85em !important;
+  }
+}
