@@ -1820,6 +1820,11 @@ const VerificationContractABI = [
           "internalType": "address",
           "name": "_credentialRegistryAddress",
           "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "_frontendBaseUrl",
+          "type": "string"
         }
       ],
       "stateMutability": "nonpayable",
@@ -1940,6 +1945,19 @@ const VerificationContractABI = [
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "frontendBaseUrl",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
         }
       ],
       "stateMutability": "view",

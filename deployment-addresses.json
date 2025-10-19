@@ -1,11 +1,11 @@
 {
   "network": "baseSepolia",
   "deployer": "0x63eea403e3075D9e6b5eA18c28021e6FfdD04a67",
-  "timestamp": "2025-10-19T14:33:52.669Z",
+  "timestamp": "2025-10-19T20:31:34.148Z",
   "contracts": {
-    "IssuerRegistry": "0x2D431C1A609D988917EB61fd02eccd9BFA02E0e3",
-    "CredentialRegistry": "0x9D63Ce88fa016d8DAcE3e6Db1D1EB8D1a7A3219C",
-    "CredentialNFT": "0x421A8866722002bC566Df8318c200018c735Cf50",
-    "VerificationContract": "0x1525E2D649248beC5D38950A412aeA9FC1C0F9AB"
+    "IssuerRegistry": "0x4b0989065f79128D4a537283AA05d8555F132F82",
+    "CredentialRegistry": "0x4Df9A6FE9A806CfDb87eDf49995F8636Ae2FF5Ea",
+    "CredentialNFT": "0xFc419383BdfE4d550d913d3f7c418ef05487f84e",
+    "VerificationContract": "0x3F52de984aBf402a0c01d687888bD62d0537aB3F"
   }
 }
